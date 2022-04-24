@@ -52,9 +52,24 @@ _This database uses a many-to-many relationship structure_
 **Update Database**
 * _While in the production directory of the project, run `dotnet ef database update`_
 
+**View Documentation**
+* _After starting the server with `dotnet run` in the terminal, enter `http://localhost:5000/` into the browser and you will be redirected to `http://localhost:5000/index.html` - the swagger documentation_
+
+**API Calls**
+* GET `api/parks` - gets a list of all parks (both national and state)
+* GET with query string example: `api/parks?parksystem=national` - gets a list of national parks
+* POST `api/parks/` with json body - adds a park
+* PUT `api/parks/{id}` with json body - edits an existing park
+* DELETE `api/parks/{id}`
+* more documentation below
+
+**View More Documentation:**
+* _After starting the server with `dotnet run` in the terminal, enter `http://localhost:5000/` into the browser and you will be redirected to `http://localhost:5000/index.html` - the swagger documentation_
+
 ## Known Bugs
 
-* 
+* swagger documentation could be completed further
+* activities can only be searched one at a time (not by multiple activities) because the    activities value is one string
 
 ## License
 
