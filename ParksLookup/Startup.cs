@@ -5,6 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using ParksLookup.Models;
+using Microsoft.OpenApi.Models;
+using System;
+using System.Reflection;
+using System.IO;
 
 namespace ParksLookup
 {
@@ -24,14 +28,28 @@ namespace ParksLookup
             services.AddDbContext<ParksLookupContext>(opt =>
                 opt.UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
             services.AddControllers();
-            services.AddSwaggerGen(s =>
+            services.AddSwaggerGen(options =>
             {
-                s.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Version = "V1",
+                    Version = "v1",
                     Title = "Parks Lookup API",
-                    Description = "API for retrieving a list of national and state parks"
+                    Description = "An ASP.NET Core Web API for listing state and national parks",
+                    // TermsOfService = new Uri("http://localhost:5000/terms"),
+                    // Contact = new OpenApiContact
+                    // {
+                    //     Name = "Parks Lookup Contact",
+                    //     Url = new Uri("http://localhost:5000/contact")
+                    // },
+                    // License = new OpenApiLicense
+                    // {
+                    //     Name = "Parks Lookup License",
+                    //     Url = new Uri("http://localhost:5000/license")
+                    // }
                 });
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+
             });
         }
 
